@@ -1,2 +1,5 @@
 v0.1.1
 Changed the project URL
+v0.1.2
+Fixed compatability issue with Jinja2==2.10.0
+Jinja2 2.10.0 added a new elif_ field for If node and broke the extension.

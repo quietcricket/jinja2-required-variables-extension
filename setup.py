@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup (
     name='jinja2-required-variables-extension',
-    version='0.1.1',
+    version='0.1.2',
     description='A custom Jinja tag `required`: ignore enclosed block of content if any of the variables is empty',
     author='Shang Liang',
     author_email='shang@wewearglasses.com',

@@ -5,6 +5,13 @@ from jinja2.ext import Extension
 
 
 class RequiredVariablesExtension(Extension):
+    """
+    A custom Jinja tag `required`: ignore enclosed block of content if any of the variables is empty
+        .. versionchanged:: 0.1.2
+        Extension broken with jinja2==2.10.0 because a new field is added for If node: elif_
+        Fixed by looping through all fields to set them to empty list if they are not used
+    """
+
     # a set of names that trigger the extension.
     tags = set(['required'])
 
@@ -40,8 +47,10 @@ class RequiredVariablesExtension(Extension):
                 test = nodes.And(left=test, right=values[i])
 
         if_node.test = test
-        # else_ attribute cannot be None
-        if_node.else_ = []
         # Assign with_node as the body of the if_node, to nest them
         if_node.body = [with_node]
+        # set other fields to empty list. 
+        for _f in nodes.If:
+            if getattr(if_node, _f) is None:
+                setattr(if_node, _f, [])
         return if_node
